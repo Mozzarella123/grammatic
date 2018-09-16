@@ -9,4 +9,12 @@ public abstract class  Lexeme {
     public String toString() {
         return value;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if(obj instanceof Lexeme) {
+    		return obj.toString().equals(toString());
+    	}
+    	return false;
+    }
 }
