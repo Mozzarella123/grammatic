@@ -1,16 +1,7 @@
 package curwa;
 
-public class Operator  extends  Part{
-    int type;
-    String value;
-    public Operator(String o, int type) {
-        this.type = type;
-        value = o;
+public class Operator extends Lexeme {
+    public Operator(String value) {
+        super(value);
     }
-    @Override
-    public String toString()
-    {
-        return value;
-    }
-
 }
