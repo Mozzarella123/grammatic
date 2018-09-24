@@ -1,7 +1,7 @@
 package curwa;
 
 public abstract class  Lexeme {
-    private String value;
+    protected String value;
     public Lexeme(String value) {
         this.value = value;
     }
