@@ -2,6 +2,7 @@ package curwa;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -52,4 +53,72 @@ public class StandardLexicalAnalyzatorTest {
         //assert
         assertEquals(10, actual.size());
     }
+    
+    @Test
+    public void minusCheck() {
+    	LexicalAnalyzator la = new StandardLexicalAnalyzator();
+    	List<Lexeme> lexems = new ArrayList<>();
+    	lexems.add( LexemeFactory.createLexeme("10") );
+    	lexems.add( LexemeFactory.createLexeme("*") );
+    	lexems.add( LexemeFactory.createLexeme("-") );
+    	lexems.add( LexemeFactory.createLexeme("2") );
+    	
+    	la.checkMinusType(lexems);
+    	
+    	assertEquals(3, lexems.size());
+    	assertEquals( "-2" , lexems.get(lexems.size() - 1).toString());
+    }
+    
+    @Test
+    public void goToSimplePostfix() {
+    	LexicalAnalyzator la = new StandardLexicalAnalyzator();
+    	List<Lexeme> lexems = new ArrayList<>();
+    	lexems.add( LexemeFactory.createLexeme("10") );
+    	lexems.add( LexemeFactory.createLexeme("*") );
+    	lexems.add( LexemeFactory.createLexeme("-2") );
+    	
+    	List<Lexeme> postfix = new ArrayList<>();
+    	postfix.add( LexemeFactory.createLexeme("10") );
+    	postfix.add( LexemeFactory.createLexeme("-2") );
+    	postfix.add( LexemeFactory.createLexeme("*") );
+    	
+    	la.goToPostfix(lexems);
+    	
+    	System.out.println(lexems);
+    	assertEquals(postfix, lexems);
+    }
+    
+    @Test
+    public void goToPostfix() {
+    	LexicalAnalyzator la = new StandardLexicalAnalyzator();
+    	List<Lexeme> lexems = new ArrayList<>();
+    	lexems.add( LexemeFactory.createLexeme("10") );
+    	lexems.add( LexemeFactory.createLexeme("*") );
+    	lexems.add( LexemeFactory.createLexeme("-2") );
+    	lexems.add( LexemeFactory.createLexeme("-") );
+    	lexems.add( LexemeFactory.createLexeme("7") );
+    	
+    	List<Lexeme> postfix = new ArrayList<>();
+    	postfix.add( LexemeFactory.createLexeme("10") );
+    	postfix.add( LexemeFactory.createLexeme("-2") );
+    	postfix.add( LexemeFactory.createLexeme("*") );
+    	postfix.add( LexemeFactory.createLexeme("7") );
+    	postfix.add( LexemeFactory.createLexeme("-") );
+    	
+    	la.goToPostfix(lexems);
+    	
+    	System.out.println(lexems);
+    	assertEquals(postfix, lexems);
+    }
+    
+    @Test
+    public void functionaalTest() {
+    	LexicalAnalyzator la = new StandardLexicalAnalyzator();
+    	List<Lexeme> lexems = la.parse("1 * ( 12 + 23 ) - ( 4 / 5 )");
+    	la.checkMinusType(lexems);
+    	la.goToPostfix(lexems);
+    	
+    	System.out.println(lexems);
+    }
+    
 }

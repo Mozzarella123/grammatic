@@ -7,7 +7,7 @@ public class LexemeFactory {
             return new Operand(value);
         }
         catch (Exception e) {
-            return new Operand(value);
+            return new Operator(value);
         }
     }
 
