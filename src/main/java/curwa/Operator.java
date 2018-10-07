@@ -20,6 +20,6 @@ public class Operator extends Lexeme {
         return Objects.hash(operationType);
     }
 
-    public OperatorType operationType;
+    public OperatorType operationType = OperatorType.BINARY;
     
 }

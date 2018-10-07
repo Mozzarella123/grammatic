@@ -13,13 +13,45 @@ public class Calculator {
     static {
         functions = new HashMap<>();
         functions.put(new Operator("+"),
-                (operands -> Double.parseDouble(operands.get(0).value) + Double.parseDouble(operands.get(1).value)));
+                (operands ->{
+                	Operand op1 = operands.get(operands.size()-2);
+                	Operand op2 = operands.get(operands.size()-1);
+                	operands.remove(op1);
+                	operands.remove(op2);
+                	return Double.parseDouble(op1.value) + Double.parseDouble(op2.value);
+                }));
         functions.put(new Operator("-"),
-                (operands -> Double.parseDouble(operands.get(0).value) - Double.parseDouble(operands.get(1).value)));
+                (operands -> {
+                	Operand op1 = operands.get(operands.size()-2);
+                	Operand op2 = operands.get(operands.size()-1);
+                	operands.remove(op1);
+                	operands.remove(op2);
+                	return Double.parseDouble(op1.value) - Double.parseDouble(op2.value);
+                }));
         functions.put(new Operator("*"),
-                (operands -> Double.parseDouble(operands.get(0).value) * Double.parseDouble(operands.get(1).value)));
+                (operands ->{
+                	Operand op1 = operands.get(operands.size()-2);
+                	Operand op2 = operands.get(operands.size()-1);
+                	operands.remove(op1);
+                	operands.remove(op2);
+                	return Double.parseDouble(op1.value) * Double.parseDouble(op2.value);
+                }));
         functions.put(new Operator("/"),
-                (operands -> Double.parseDouble(operands.get(0).value) / Double.parseDouble(operands.get(1).value)));
+                (operands -> {
+                	Operand op1 = operands.get(operands.size()-2);
+                	Operand op2 = operands.get(operands.size()-1);
+                	operands.remove(op1);
+                	operands.remove(op2);
+                	return Double.parseDouble(op1.value) / Double.parseDouble(op2.value);
+                }));
+        Operator uMinus = new Operator("-");
+        uMinus.operationType = OperatorType.UNARY;
+        functions.put(uMinus,
+                (operands -> {
+                	Operand op = operands.get(operands.size()-1);
+                	operands.remove(op);
+                	return - Double.parseDouble(op.value);
+                }));
     }
 
     public double calculate(List<Lexeme> lexemes) {
@@ -35,6 +67,9 @@ public class Calculator {
 
             Operand newO = new Operand(functions.get(op).apply(operands).toString());
             newLexems.add(0, newO);
+            for(Operand operand : operands) {
+            	newLexems.add(0,operand);
+            }
             return calculate(newLexems);
         } else {
             return Double.parseDouble(lexemes.get(0).value);

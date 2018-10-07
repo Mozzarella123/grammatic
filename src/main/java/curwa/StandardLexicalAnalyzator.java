@@ -84,10 +84,8 @@ public class StandardLexicalAnalyzator implements LexicalAnalyzator {
 	}
 	
 	private List<Lexeme> swapToNegative(List<Lexeme> lexems, int index){
-		String value = "-" + lexems.get(index + 1).toString();
-		lexems.add(index, new Operand(value));
-		lexems.remove(index + 1);
-		lexems.remove(index + 1);
+		Operator minus = (Operator)lexems.get( index );
+		minus.operationType = OperatorType.UNARY;
 		return lexems;
 	}
 
@@ -98,6 +96,7 @@ public class StandardLexicalAnalyzator implements LexicalAnalyzator {
 		for(int i = 0; i < lexems.size(); i++) {
 			Lexeme current = lexems.get(i);
 			if(current instanceof Operator) {
+				Operator currentOperator = ((Operator)current);
 				if (current.toString().equals("(")) {
 					operators.addFirst(current);
 				}
@@ -108,8 +107,9 @@ public class StandardLexicalAnalyzator implements LexicalAnalyzator {
 					operators.pollFirst();
 				}
 				else {
-					while (!operators.isEmpty() && priority(operators.peekFirst())
-							>= priority(current)) {
+					while (!operators.isEmpty() && priority(operators.peekFirst() )
+							>= priority(current) && 
+							 currentOperator.operationType != OperatorType.UNARY) {
 	                    ret.addLast(operators.pollFirst());
 	                }
 					operators.addFirst(current);
