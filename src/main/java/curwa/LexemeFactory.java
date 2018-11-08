@@ -6,6 +6,7 @@ public class LexemeFactory {
             Integer.parseInt(value);
             return new Operand(value);
         }
+
         catch (Exception e) {
             return new Operator(value);
         }
