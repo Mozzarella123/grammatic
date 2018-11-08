@@ -28,12 +28,13 @@ public class Automat {
 
     public Set<AutomatState> check(String expression){
 
+        String expr = expression+"$";
         state.clear();
         state.add(config.startState);
 
-        for( int i = 0; i < expression.length(); i++){
+        for( int i = 0; i < expr.length(); i++){
             while (addEpsilon());
-            Set<AutomatState> tempstate = consume(expression.charAt(i));
+            Set<AutomatState> tempstate = consume(expr.charAt(i));
             state.clear();
             state.addAll(tempstate);
             if(state.size() == 0){

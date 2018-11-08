@@ -30,6 +30,10 @@ public class AutomatTest {
         AutomatState dNum = new AutomatState("dnum");
         AutomatState oNum = new AutomatState("onum");
         AutomatState hNum = new AutomatState("hnum");
+        AutomatState bFin = new AutomatState("bFin");
+        AutomatState dFin = new AutomatState("dFin");
+        AutomatState oFin = new AutomatState("oFin");
+        AutomatState hFin = new AutomatState("hFin");
 
         AutomatStateLink.create(config.startState,minus, true,"-");
         AutomatStateLink.createEpsilon(config.startState, bNum, true);
@@ -46,12 +50,26 @@ public class AutomatTest {
         AutomatStateLink.create(oNum, oNum, true, onumbers);
         AutomatStateLink.create(hNum, hNum, true, hnumbers);
 
+        AutomatStateLink.create(bNum,bFin,true,"b");
+        AutomatStateLink.create(dNum,dFin,true,"$");
+        AutomatStateLink.create(oNum,oFin,true,"o");
+        AutomatStateLink.create(hNum,hFin,true,"h");
+
+        AutomatStateLink.create(bFin,bFin,true,"$");
+        AutomatStateLink.create(dFin,dFin,true,"$");
+        AutomatStateLink.create(oFin,oFin,true,"$");
+        AutomatStateLink.create(hFin,hFin,true,"$");
+
         config.states.add(config.startState);
         config.states.add(minus);
         config.states.add(bNum);
         config.states.add(dNum);
         config.states.add(oNum);
         config.states.add(hNum);
+        config.states.add(bFin);
+        config.states.add(dFin);
+        config.states.add(oFin);
+        config.states.add(hFin);
 
         return config;
     }
@@ -69,30 +87,16 @@ public class AutomatTest {
 
         Cls getCls(String expr){
             Cls cls = null;
-            Set<AutomatState> sources = automat.check(expr);
+            Set<AutomatState> sources = automat.check(expr).stream().filter( s -> s.name.endsWith("Fin"))
+                    .collect(Collectors.toSet());
             if(sources.size() == 0)
                 return null;
             AutomatState state = sources.iterator().next();
-            if (sources.size() > 1){
-                TreeMap<String,Integer> priority = new TreeMap<>();
-                priority.put("bnum",4);
-                priority.put("dnum",2);
-                priority.put("onum",3);
-                priority.put("hnum",1);
-                state = sources.stream().max( Comparator.comparing(first -> {
-                    try {
-                        return priority.get(first.name);
-                    }
-                    catch (Exception e){
-                        return 0;
-                    }
-                } ) ).orElse(null);
-            }
             switch (state.name){
-                case "bnum": cls = Cls.bin; break;
-                case "dnum": cls = Cls.dec; break;
-                case "onum": cls = Cls.oct; break;
-                case "hnum": cls = Cls.hex; break;
+                case "bFin": cls = Cls.bin; break;
+                case "dFin": cls = Cls.dec; break;
+                case "oFin": cls = Cls.oct; break;
+                case "hFin": cls = Cls.hex; break;
             }
             return cls;
         }
@@ -127,18 +131,22 @@ public class AutomatTest {
 
         Clasifier clasifier = new Clasifier(automat);
 
-        Assert.assertEquals(Cls.bin, clasifier.getCls("10011"));
-        Assert.assertEquals(Cls.bin, clasifier.getCls("-10011"));
-        Assert.assertEquals(Cls.oct, clasifier.getCls("100112"));
-        Assert.assertEquals(Cls.oct, clasifier.getCls("-100112"));
+
+        Assert.assertEquals(Cls.oct, clasifier.getCls("10011o"));
+        Assert.assertEquals(Cls.bin, clasifier.getCls("10011b"));
+        Assert.assertEquals(Cls.bin, clasifier.getCls("-10011b"));
+        Assert.assertEquals(Cls.oct, clasifier.getCls("100112o"));
+        Assert.assertEquals(Cls.oct, clasifier.getCls("-100112o"));
         Assert.assertEquals(Cls.dec, clasifier.getCls("1001129"));
         Assert.assertEquals(Cls.dec, clasifier.getCls("-1001129"));
-        Assert.assertEquals(Cls.hex, clasifier.getCls("1001129f"));
-        Assert.assertEquals(Cls.hex, clasifier.getCls("-1001129f"));
+        Assert.assertEquals(Cls.hex, clasifier.getCls("1001129fh"));
+        Assert.assertEquals(Cls.hex, clasifier.getCls("-1001129fh"));
         Assert.assertEquals(null, clasifier.getCls("-10011!29"));
-        Assert.assertEquals(null, clasifier.getCls("1001!129f"));
-        Assert.assertEquals(null, clasifier.getCls("-10@011"));
-        Assert.assertEquals(null, clasifier.getCls("10011#2"));
+        Assert.assertEquals(null, clasifier.getCls("1001!129fh"));
+        Assert.assertEquals(null, clasifier.getCls("-10@011b"));
+        Assert.assertEquals(null, clasifier.getCls("10011#2o"));
+        Assert.assertEquals(null, clasifier.getCls("10012b"));
+        Assert.assertEquals(null, clasifier.getCls("10012a"));
 
     }
 
