@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:automatConfig ns2:start="start" xmlns:ns2="au">
+    <ns2:states name="start">
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+    </ns2:states>
+    <ns2:states name="unar minus">
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>unar minus</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>unar minus</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>open</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+    </ns2:states>
+    <ns2:states name="number">
+        <ns2:links ordered="true">
+            <from>unar minus</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>number</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>number</from>
+            <to>operator</to>
+            <keys>+</keys>
+            <keys>-</keys>
+            <keys>*</keys>
+            <keys>/</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>number</from>
+            <to>close</to>
+            <keys>)</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>open</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+    </ns2:states>
+    <ns2:states name="open">
+        <ns2:links ordered="true">
+            <from>start</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>unar minus</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>open</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>open</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>open</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+    </ns2:states>
+    <ns2:states name="operator">
+        <ns2:links ordered="true">
+            <from>number</from>
+            <to>operator</to>
+            <keys>+</keys>
+            <keys>-</keys>
+            <keys>*</keys>
+            <keys>/</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>close</from>
+            <to>operator</to>
+            <keys>+</keys>
+            <keys>-</keys>
+            <keys>*</keys>
+            <keys>/</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>unar minus</to>
+            <keys>-</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>number</to>
+            <keys>0</keys>
+            <keys>1</keys>
+            <keys>2</keys>
+            <keys>3</keys>
+            <keys>4</keys>
+            <keys>5</keys>
+            <keys>6</keys>
+            <keys>7</keys>
+            <keys>8</keys>
+            <keys>9</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>operator</from>
+            <to>open</to>
+            <keys>(</keys>
+        </ns2:links>
+    </ns2:states>
+    <ns2:states name="close">
+        <ns2:links ordered="true">
+            <from>number</from>
+            <to>close</to>
+            <keys>)</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>close</from>
+            <to>close</to>
+            <keys>)</keys>
+        </ns2:links>
+        <ns2:links ordered="true">
+            <from>close</from>
+            <to>operator</to>
+            <keys>+</keys>
+            <keys>-</keys>
+            <keys>*</keys>
+            <keys>/</keys>
+        </ns2:links>
+    </ns2:states>
+</ns2:automatConfig>
