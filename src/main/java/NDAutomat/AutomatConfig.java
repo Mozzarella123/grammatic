@@ -6,7 +6,7 @@ import java.util.List;
 
 @XmlType(namespace = "au")
 @XmlRootElement(namespace = "au")
-public class AutomatConfig {
+public class AutomatConfig extends Core.AutomatConfig {
 
     @XmlElement(type = AutomatState.class,namespace = "au")
     public List<AutomatState> states = new ArrayList<>();

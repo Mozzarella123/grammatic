@@ -1,5 +1,6 @@
 package NDAutomat;
 
+import Core.AutomatState;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,9 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Comparator;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class AutomatTest {
